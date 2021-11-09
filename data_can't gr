@@ -1,0 +1,9 @@
+ponumber='PO1610-91'
+po_id=11339
+itemid=6723
+pritemid=30276	
+
+select * from item where id=6723
+select * from pritem where poid='PO1610-91'
+select * from pritem where poid='11339'
+

@@ -1,0 +1,58 @@
+.app-header .nav-item .nav-link .badge.menu-tab {
+    left: 100%;
+    padding: 3px;
+}
+.table-hover tbody tr {
+    background-color: #fff;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgb(250, 252, 252);
+}
+.pinned{
+	border-color: #ccc;
+   background-color: #efefef;
+}
+.table th, .table td {
+    padding: 0.3rem;
+}
+.page-number{
+	 text-align: center;
+        background-color: #fff !important;
+    border: 1px solid #c8ced3;
+}
+.page-link-2{
+	 cursor: default;
+    line-height: 2;
+    font-size: 0.9rem;
+    padding: 0.2rem 0.5rem;
+}
+.btn-sm, .btn-group-sm > .btn {
+    padding: 0.2rem 0.3rem;
+    font-size: 0.765625rem;
+    line-height: 1;
+    border-radius: 0.2rem;
+}
+.modal-lg {
+    max-width: 80% !important;
+}
+#error_modal_content {
+    color: #f00;
+}
+.btn-action{
+	margin: 5px;
+	background-color: #e9efe8;
+}
+.link-action{
+	color: #040404 !important;
+}
+.link-action:hover{
+	text-decoration: none;
+}
+.miniaction {
+    cursor: pointer;
+}
+.nav-tabs .nav-item {
+    margin-bottom: -1px;
+    background-color: #e4e7ea;
+    border: 1px solid #fff;
+}

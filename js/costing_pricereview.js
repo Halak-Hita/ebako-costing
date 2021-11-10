@@ -63,61 +63,20 @@ function costing_pricereview_search(offset){
 
 function costing_pricereview_search_then_print_summary(offset){
     var price_review_base_on = $("input[name='price_review_base_on']:checked").val();
-	
-    var start_ratevalue = $('#pricereview__start_ratevalue').val();
-    var end_ratevalue = $('#pricereview__end_ratevalue').val(); 
-    var range_ratevalue = $('#pricereview__range_ratevalue').val();
-    var profit_percentage = $('#pricereview__profit_percentage').val();
-    
-    var start_profit = $('#pricereview__start_profit').val();
-    var end_profit = $('#pricereview__end_profit').val(); 
-    var range_profit = $('#pricereview__range_profit').val();
-    var ratevalue = $('#pricereview__ratevalue').val();
-    
-    var port_origin_cost = $('#pricereview__port_origin_cost').val();
-    var fixed_cost = $('#pricereview__fixed_cost').val();
-    var variable_cost = $('#pricereview__variable_cost').val();
-    var port_origin_cost = $('#pricereview__port_origin_cost').val();
-    var picklist_mark_up = $('#pricereview__picklist_mark_up').val();
-    var picklist_ratevalue = $('#pricereview__picklist_ratevalue').val();
-	
-    var target_price = $('#pricereview__target_price').val();
-    
+    var start_ratevalue = $('#pricereview__ratevalue').val();
+    var end_ratevalue = $('#pricereview__picklist_ratevalue').val(); 
+    var range_ratevalue = $('#pricereview__picklist_margin').val();
     var model_codes = $('#model_codes').val();
 	var code = $('#code_search').val();
     var custcode = $('#custcode_search').val();
-    var customerid = $('#customerid_search').val();
-    var datefrom = $('#datefrom').val();
-    var dateto = $('#dateto').val();
-    var is_over_due = $( "#is_over_due:checked" ).val();
     
     var full_url = url + 'costing_pricereview/search_pricereview_then_print_summary/' + offset + "?"
-	    + "price_review_base_on=" + price_review_base_on
-	    
-	    + "&start_ratevalue=" + start_ratevalue
-	    + "&end_ratevalue=" + end_ratevalue
-	    + "&range_ratevalue=" + range_ratevalue
-	    + "&profit_percentage=" + profit_percentage
-	    
-	    + "&start_profit=" + start_profit
-	    + "&end_profit=" + end_profit
-	    + "&range_profit=" + range_profit
-	    + "&ratevalue=" + ratevalue
-	    
-	    + "&port_origin_cost=" + port_origin_cost
-	    + "&fixed_cost=" + fixed_cost
-	    + "&variable_cost=" + variable_cost
-	    + "&port_origin_cost=" + port_origin_cost
-	    + "&picklist_mark_up=" + picklist_mark_up
-	    + "&picklist_ratevalue=" + picklist_ratevalue
-	    + "&target_price=" + target_price
-	    
-    	+ "&code=" + code 
+    + "price_review_base_on=" + price_review_base_on
+    + "&start_ratevalue=" + start_ratevalue
+    + "&end_ratevalue=" + end_ratevalue
+    + "&range_ratevalue=" + range_ratevalue	
+        + "&code=" + code 
     	+ "&custcode=" + custcode 
-    	+ "&customerid=" + customerid 
-    	+ "&datefrom=" + datefrom 
-    	+ "&dateto=" + dateto
-    	+ "&is_over_due=" + is_over_due
         + "&model_codes=" + encodeURIComponent(JSON.stringify( model_codes )); 
     	
     

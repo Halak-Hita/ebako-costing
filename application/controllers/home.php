@@ -54,3 +54,5 @@ class Home extends CI_Controller {
     }
 
 }
+
+// pg_restore -h localhost -p 5432 -U postgres -d ebako_erp -v "ebako_erp.backup"

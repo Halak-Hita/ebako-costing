@@ -197,12 +197,8 @@ class costing_pricereview extends CI_Controller {
     	$costingcategories_notdirect = $this->model_costing->selectCostingCategoryNotDirectMaterial();
     	
     	$list_costing = $this->model_costing->search_and_get_all_for_pricereview($model_codes, $code, $custcode, $customerid, $datefrom, $dateto, $is_over_due);
-    	$costing_details = [];
-    	
     	$ranges = [];
-    	$start_range = 0;
-    	$end_range = 0;
-    	$range = 0;
+    	
     	
     	if( $price_review_base_on == "rate" ){
 	    	$start_range = $start_ratevalue;
@@ -213,7 +209,9 @@ class costing_pricereview extends CI_Controller {
 	    	$end_range = $end_profit;
 	    	$range = $range_profit;
     	}
-    	
+        $start_range = 10;
+    	$end_range = 100;
+    	$range = 10;
     	while( $start_range <= $end_range ) {
     		$ranges [] = $start_range;
     		
@@ -227,8 +225,20 @@ class costing_pricereview extends CI_Controller {
     		
     		
     		foreach ($list_costing as $costing){
-    			$costing_details[ $costing->id ][ $start_range ] =  ceil( $this->getFOB_price($costing, $costingcategories, $costingcategories_notdirect, $ratevalue_tmp, $profit_percentage_tmp, $port_origin_cost, $fixed_cost, $variable_cost, $port_origin_cost, $picklist_mark_up, $picklist_ratevalue) );
+    			$costing_details[ $costing->id ][ $start_range ] =  ceil( $this->getFOB_price(
+                $costing, 
+                $costingcategories, 
+                $costingcategories_notdirect, 
+                $ratevalue_tmp, 
+                $profit_percentage_tmp, 
+                $port_origin_cost, 
+                $fixed_cost, 
+                $variable_cost, 
+                $port_origin_cost, 
+                $picklist_mark_up, 
+                $picklist_ratevalue) );
     		}
+       
     		$start_range += $range;
     	}
     	
@@ -297,7 +307,7 @@ class costing_pricereview extends CI_Controller {
     		$picklist_mark_up,
     		$picklist_ratevalue
     	){
-    	
+    	$rate = 1;
     	$costingid = $costing->id;
     	
     	if( empty($profit_percentage) ){
@@ -356,6 +366,7 @@ class costing_pricereview extends CI_Controller {
     		}
     		$directmaterialtotal += $subtotal;
     	}
+       
     
     	/**
     	 *  Costing not direct material
@@ -404,7 +415,6 @@ class costing_pricereview extends CI_Controller {
     		}
     		$sum_not_direct [ $costingcategory->id ] = $subtotal;
     	}
-    
     	$noname = round( (100 - ($fixed_cost + $variable_cost + $profit_percentage)) / 100, 3 );
     	$factory_cost_and_profit = round( (($directmaterialtotal + $sum_not_direct [9]) / $noname), 3 );
     

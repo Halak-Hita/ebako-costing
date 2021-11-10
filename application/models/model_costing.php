@@ -1146,6 +1146,102 @@ class model_costing extends CI_Model {
         return $this->db->query($query)->result();
     }
 
+   function search_and_get_all_for_pricereview($model_codes, $code, $custcode, $customerid, $datefrom, $dateto, $is_over_due) {
+        $query = "select 
+                costing.*,
+                model.no code,
+                model.custcode,
+                model.description,
+                model.filename,
+        		model.is_temporary_photo,
+        		model.finishoverview,
+        		model.constructionoverview,
+                model.dd,
+                model.dw,
+                model.dht,
+        		
+                model.nw,
+                model.gw,
+                
+        		customer.name customername
+                from costing
+                left join model on costing.modelid=model.id
+                left join customer on costing.customerid=customer.id";
+        $where_query = "";
+        $where_query_modelcodes = "";
+
+        $codes = [];
+        $code = trim($code);
+
+        if (!empty($code)) {
+            $codes = explode(',', $code);
+        }
+
+        if (count($codes) > 0) {
+            $where_query .= " and ( ";
+            $i = 1;
+            foreach ($codes as $code) {
+                $where_query .= "  model.no ilike '%" . trim($code) . "%'";
+                if ($i < count($codes)) {
+                    $where_query .= " or ";
+                }
+                $i += 1;
+            }
+            $where_query .= " ) ";
+        }
+
+        if ($custcode != '') {
+            $where_query .= " and model.custcode ilike '%$custcode%'";
+        }if ($customerid != '' && $customerid != 0) {
+            $where_query .= " and costing.customerid=$customerid";
+        }if ($datefrom != '' && $dateto == '') {
+            $where_query .= " and costing.date='$datefrom'";
+        }if ($datefrom != '' && $dateto != '') {
+            $where_query .= " and costing.date between '$datefrom' and '$dateto'";
+        }if ($datefrom == '' && $dateto != '') {
+            $where_query .= " and costing.date='$dateto'";
+        }
+
+        if (is_array($model_codes) && count($model_codes) > 0) {
+//extract where in
+            $in_sql = "";
+            $in_cointer = 1;
+            $model_codes_length = count($model_codes);
+            foreach ($model_codes as $model_code) {
+                $in_sql .= "'" . $model_code . "'";
+                if ($in_cointer < $model_codes_length) {
+                    $in_sql .= " , ";
+                }
+                $in_cointer += 1;
+            }
+            $where_query_modelcodes = " model.no in (" . $in_sql . ") ";
+        }
+
+        if (empty($where_query)) {
+            if (!empty($where_query_modelcodes)) {
+                $query .= " where " . $where_query_modelcodes;
+            }
+        } else {
+            if (!empty($where_query_modelcodes)) {
+                $where_query = " where (true " . $where_query . ")";
+                $query .= $where_query . " or " . $where_query_modelcodes;
+            } else {
+                $query .= " where true " . $where_query;
+            }
+        }
+
+        if ($is_over_due == "true") {
+            if (empty($where_query) && empty($where_query_modelcodes)) {
+                $query .= " where costing.date < now() - '1 years'::interval ";
+            } else {
+                $query .= " and costing.date < now() - '1 years'::interval ";
+            }
+        }
+
+        $query .= "  and (costing.checkedstatus='1') order by costing.id desc ";
+        return $this->db->query($query)->result();
+    }
+
 }
 
 ?>

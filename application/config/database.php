@@ -50,8 +50,8 @@ $active_record = TRUE;
 
 //$db['default']['hostname'] = 'localhost';
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'lion';
-$db['default']['password'] = ''; //root';
+$db['default']['username'] = 'postgres';
+$db['default']['password'] = 'gasaribu'; //root';
 $db['default']['database'] = 'ebako_erp';// 'erp_live';
 //$db['default']['database'] = 'erp_live_staging';// 'erp_live';
 $db['default']['dbdriver'] = 'postgre';
